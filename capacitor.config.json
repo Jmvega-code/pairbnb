@@ -1,0 +1,6 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "sales-nucleo",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
