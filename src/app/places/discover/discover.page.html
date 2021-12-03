@@ -11,15 +11,21 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-segment value="all" (ionChange)="onFilterUpdate($event)">
+    <ion-segment-button value="all">
+      <ion-label>All Places</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="bookable">
+      <ion-label>Bookable Places</ion-label>
+    </ion-segment-button>
+  </ion-segment>
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
         <ion-card>
           <ion-card-header>
             <ion-card-title>{{ loadedPlaces[0].title }}</ion-card-title>
-            <ion-card-subtitle
-              >{{ loadedPlaces[0].price | currency }} / Night</ion-card-subtitle
-            >
+            <ion-card-subtitle>{{ loadedPlaces[0].price | currency }} / Night</ion-card-subtitle>
           </ion-card-header>
           <ion-img [src]="loadedPlaces[0].imageUrl"></ion-img>
           <ion-card-content>
