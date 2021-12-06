@@ -2,14 +2,18 @@
   <ion-menu side="start">
     <ion-header>
       <ion-toolbar>
-        <ion-title>
-          PairBnB
-        </ion-title>
+        <ion-title> PairBnB </ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
       <ion-list>
+        <ion-item lines="full">
+          <ion-icon slot="start" name="moon"></ion-icon>
+          <ion-label> Toggle Dark Theme </ion-label>
+          <ion-toggle slot="end" (ionChange)="toggleTheme($event)"></ion-toggle>
+        </ion-item>
+
         <ion-menu-toggle>
           <ion-item lines="none" routerLink="/places/tabs/discover">
             <ion-icon name="business" slot="start"></ion-icon>

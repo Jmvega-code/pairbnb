@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
 })
 export class AppComponent {
   constructor(
@@ -31,5 +31,14 @@ export class AppComponent {
   onLogout() {
     this.authService.logout();
     this.router.navigateByUrl('/auth');
+  }
+
+  // funcion para cambiar el modo desde el toggle
+  toggleTheme(event) {
+    if (event.detail.checked) {
+      document.body.setAttribute('color-theme', 'dark');
+    } else {
+      document.body.setAttribute('color-theme', 'light');
+    }
   }
 }
