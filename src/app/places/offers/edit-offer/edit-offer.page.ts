@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 export class EditOfferPage implements OnInit, OnDestroy {
   place: Place;
   form: FormGroup;
-  placeSub: Subscription;
+  private placeSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,20 +32,20 @@ export class EditOfferPage implements OnInit, OnDestroy {
       }
       this.placeSub = this.placesService.getPlace(paramMap.get('placeId')).subscribe((place) => {
         this.place = place;
-      });
-      this.form = new FormGroup({
-        title: new FormControl(this.place.title, {
-          updateOn: 'blur',
-          validators: [Validators.required],
-        }),
-        description: new FormControl(this.place.description, {
-          updateOn: 'blur',
-          validators: [Validators.required, Validators.max(180)],
-        }),
-        price: new FormControl(this.place.price, {
-          updateOn: 'blur',
-          validators: [Validators.required],
-        }),
+        this.form = new FormGroup({
+          title: new FormControl(this.place.title, {
+            updateOn: 'blur',
+            validators: [Validators.required],
+          }),
+          description: new FormControl(this.place.description, {
+            updateOn: 'blur',
+            validators: [Validators.required, Validators.max(180)],
+          }),
+          price: new FormControl(this.place.price, {
+            updateOn: 'blur',
+            validators: [Validators.required],
+          }),
+        });
       });
     });
   }

@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class PlaceDetailPage implements OnInit, OnDestroy {
   place: Place;
-  placeSub: Subscription;
+  private placeSub: Subscription;
 
   constructor(
     private navCtrl: NavController,
