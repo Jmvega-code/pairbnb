@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import { take, map, tap, delay } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 
 import { Place } from './place.model';
@@ -47,7 +48,7 @@ export class PlacesService {
     return this._places.asObservable();
   }
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private loadingCtrl: LoadingController) {}
 
   getPlace(id: string) {
     return this.places.pipe(
@@ -69,8 +70,40 @@ export class PlacesService {
       dateTo,
       this.authService.userId
     );
-    this.places.pipe(take(1)).subscribe((places) => {
-      this._places.next(places.concat(newPlace));
-    });
+    return this.places.pipe(
+      take(1),
+      delay(2000),
+      tap((places) => {
+        this._places.next(places.concat(newPlace));
+        this.loadingCtrl.dismiss();
+      })
+    );
+  }
+
+  updatePlace(placeId: string, title: string, description: string, price: number) {
+    return this.places.pipe(
+      take(1),
+      delay(2000),
+      tap((places) => {
+        const updatedPlaceIndex = places.findIndex((p) => p.id === placeId);
+        const updatedPlaces = [...places];
+        // updatedPlace[updatedPlaceIndex].title = title;
+        // updatedPlace[updatedPlaceIndex].description = description;
+        // updatedPlace[updatedPlaceIndex].price = price;
+        // console.log(updatedPlace);
+        const oldPlace = updatedPlaces[updatedPlaceIndex];
+        updatedPlaces[updatedPlaceIndex] = new Place(
+          oldPlace.id,
+          title,
+          description,
+          oldPlace.imageUrl,
+          price,
+          oldPlace.availableFrom,
+          oldPlace.availableTo,
+          oldPlace.userId
+        );
+        this._places.next(updatedPlaces);
+      })
+    );
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingController, NavController } from '@ionic/angular';
 
 import { PlacesService } from '../../places.service';
 import { Place } from '../../place.model';
@@ -21,7 +21,9 @@ export class EditOfferPage implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private placesService: PlacesService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private router: Router,
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit() {
@@ -54,7 +56,27 @@ export class EditOfferPage implements OnInit, OnDestroy {
     if (!this.form.valid) {
       return;
     }
-    console.log(this.form);
+    this.loadingCtrl
+      .create({
+        message: 'Updating Place...',
+      })
+      .then((loader) => {
+        loader.present();
+        setTimeout(() => {
+          this.placesService
+            .updatePlace(
+              this.place.id,
+              this.form.value.title,
+              this.form.value.description,
+              +this.form.value.price
+            )
+            .subscribe(() => {
+              loader.dismiss();
+              this.form.reset();
+              this.navCtrl.navigateBack('/places/tabs/offers');
+            });
+        }, 1000);
+      });
   }
 
   ngOnDestroy(): void {

@@ -8,5 +8,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-title>{{ place.title }}</ion-title>
+  <ion-img [src]="place.imageUrl"></ion-img>
   <ion-button color="primary" margin (click)="onBookPlace()">Book</ion-button>
 </ion-content>
