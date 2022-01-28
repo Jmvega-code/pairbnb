@@ -20,7 +20,7 @@ export class PlacesService {
       // Complete date: YYYY-MM-DD (eg 1997-07-16)
       new Date('2022-01-01'),
       new Date('2022-12-01'),
-      'abc'
+      'xyz'
     ),
     new Place(
       'p2',
